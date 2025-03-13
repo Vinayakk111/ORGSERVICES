@@ -10,7 +10,7 @@
 	<groupId>com.app.vpk.ApiLayer</groupId>
 	<artifactId>ApiLayer</artifactId>
 	<packaging>war</packaging>
-	<name>ApiLayer</name>
+	<name>apilayer</name>
 	<description>demo application for creating api end point</description>
 	<dependencies>
 		 <dependency>

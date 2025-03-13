@@ -5,6 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:test": "ng build --prod -c=test",
+    "build:uat": "ng build --prod -c=uat",
+    "build:dev": "ng build --prod -c=dev",
+    "build:preprod": "ng build --prod -c=preprod",
+    "build:prod": "ng build --prod -c=prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

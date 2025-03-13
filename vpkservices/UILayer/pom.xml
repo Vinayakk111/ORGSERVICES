@@ -13,81 +13,354 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<description>Angular UILayer</description>
-	<build>
-		<resources>
-			<resource>
-				<directory>./</directory>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.12.1</version>
+	<profiles>
+		<profile>
+			<id>default</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>./</directory>
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.12.1</version>
 
-				<executions>
-					<!-- Install Node.js and npm -->
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<configuration>
-							<nodeVersion>v12.14.1</nodeVersion>  <!-- Use the latest LTS version -->
-							<npmVersion>6.13.4</npmVersion>
-						</configuration>
-					</execution>
+						<executions>
+							<!-- Install Node.js and npm -->
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v12.14.1</nodeVersion>  <!-- Use the latest LTS version -->
+									<npmVersion>6.13.4</npmVersion>
+								</configuration>
+							</execution>
 
-					<!-- Install Angular dependencies -->
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-							<workingDirectory>./</workingDirectory>
-						</configuration>
-					</execution>
+							<!-- Install Angular dependencies -->
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
 
-					<!-- Build Angular App -->
-					<execution>
-						<id>npm build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run build</arguments>
-							<workingDirectory>./</workingDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <version>3.2.0</version>
-            <executions>
-                <execution>
-                    <id>copy-angular-to-static</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>../ApiLayer/src/main/resources/static/</outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>./</directory>
-                                <filtering>false</filtering>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin> -->
-		</plugins>
-	</build>
+							<!-- Build Angular App -->
+							<execution>
+								<id>npm build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>./</directory>
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.12.1</version>
+
+						<executions>
+							<!-- Install Node.js and npm -->
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v12.14.1</nodeVersion>  <!-- Use the latest LTS version -->
+									<npmVersion>6.13.4</npmVersion>
+								</configuration>
+							</execution>
+
+							<!-- Install Angular dependencies -->
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+
+							<!-- Build Angular App -->
+							<execution>
+								<id>npm build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build:dev</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>test</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>./</directory>
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.12.1</version>
+
+						<executions>
+							<!-- Install Node.js and npm -->
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v12.14.1</nodeVersion>  <!-- Use the latest LTS version -->
+									<npmVersion>6.13.4</npmVersion>
+								</configuration>
+							</execution>
+
+							<!-- Install Angular dependencies -->
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+
+							<!-- Build Angular App -->
+							<execution>
+								<id>npm build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build:test</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>uat</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>./</directory>
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.12.1</version>
+
+						<executions>
+							<!-- Install Node.js and npm -->
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v12.14.1</nodeVersion>  <!-- Use the latest LTS version -->
+									<npmVersion>6.13.4</npmVersion>
+								</configuration>
+							</execution>
+
+							<!-- Install Angular dependencies -->
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+
+							<!-- Build Angular App -->
+							<execution>
+								<id>npm build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build:uat</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>preprod</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>./</directory>
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.12.1</version>
+
+						<executions>
+							<!-- Install Node.js and npm -->
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v12.14.1</nodeVersion>  <!-- Use the latest LTS version -->
+									<npmVersion>6.13.4</npmVersion>
+								</configuration>
+							</execution>
+
+							<!-- Install Angular dependencies -->
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+
+							<!-- Build Angular App -->
+							<execution>
+								<id>npm build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build:preprod</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>./</directory>
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.12.1</version>
+
+						<executions>
+							<!-- Install Node.js and npm -->
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v12.14.1</nodeVersion>  <!-- Use the latest LTS version -->
+									<npmVersion>6.13.4</npmVersion>
+								</configuration>
+							</execution>
+
+							<!-- Install Angular dependencies -->
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+
+							<!-- Build Angular App -->
+							<execution>
+								<id>npm build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build:prod</arguments>
+									<workingDirectory>./</workingDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
