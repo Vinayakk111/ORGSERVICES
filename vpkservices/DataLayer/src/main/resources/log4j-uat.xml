@@ -28,13 +28,12 @@
         <!-- Root Logger -->
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="FileAppender"/>
-            <AppenderRef ref="RollingFile"/>
         </Root>
-
         <!-- Specific Logger Example -->
-        <Logger name="com.example" level="debug" additivity="false">
-            <AppenderRef ref="FileAppender"/>
+        <Logger name="orgservices" level="info">
+            <AppenderRef ref="log-file" level="info"/>
+            <AppenderRef ref="rolling-file" level="info"/>
+            <AppenderRef ref="console"/>
         </Logger>
     </Loggers>
 </Configuration>
