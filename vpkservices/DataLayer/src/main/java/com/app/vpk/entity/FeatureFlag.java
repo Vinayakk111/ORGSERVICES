@@ -99,3 +99,15 @@ public class FeatureFlag {
 	}
 
 }
+
+//-- world.ff4j_features definition
+//
+//CREATE TABLE `ff4j_features` (
+//  `FEAT_UID` varchar(100) NOT NULL,
+//  `ENABLE` tinyint(1) NOT NULL DEFAULT '0',
+//  `DESCRIPTION` text,
+//  `STRATEGY` varchar(255) DEFAULT NULL,
+//  `EXPRESSION` text,
+//  `GROUPNAME` varchar(100) DEFAULT NULL,
+//  PRIMARY KEY (`FEAT_UID`)
+//)

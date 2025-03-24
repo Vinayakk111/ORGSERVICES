@@ -90,3 +90,18 @@ public class CountryLanguage {
                 '}';
     }
 }
+
+//-- world.countrylanguage definition
+//
+//CREATE TABLE `countrylanguage` (
+//  `CountryCode` char(3) NOT NULL DEFAULT '',
+//  `Language` char(30) NOT NULL DEFAULT '',
+//  `IsOfficial` enum('T','F') NOT NULL DEFAULT 'F',
+//  `Percentage` decimal(4,1) NOT NULL DEFAULT '0.0',
+//  `id` bigint NOT NULL,
+//  `country_code` varchar(255) DEFAULT NULL,
+//  `is_official` varchar(255) NOT NULL,
+//  PRIMARY KEY (`CountryCode`,`Language`),
+//  KEY `CountryCode` (`CountryCode`),
+//  CONSTRAINT `countryLanguage_ibfk_1` FOREIGN KEY (`CountryCode`) REFERENCES `country` (`Code`)
+//)

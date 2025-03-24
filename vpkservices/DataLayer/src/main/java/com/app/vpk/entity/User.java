@@ -8,19 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
+	@Column(name = "id")
 	private Long id;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="email")
+
+	@Column(name = "email")
 	private String email;
 
 	public Long getId() {
@@ -46,8 +46,13 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
 
 }
+
+
+//CREATE TABLE `user` (
+//		  `id` bigint NOT NULL,
+//		  `email` varchar(255) DEFAULT NULL,
+//		  `name` varchar(255) DEFAULT NULL,
+//		  PRIMARY KEY (`id`)
+//		)
