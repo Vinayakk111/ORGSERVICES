@@ -1,5 +1,6 @@
 package com.app.vpk.controller;
 
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,7 +35,7 @@ import com.app.vpk.service.UserService;
 
 @RestController
 public class TestController {
-	private static final Logger logger = LogManager.getLogger("orgservices");
+	private static final Logger logger = LogManager.getLogger(TestController.class);
 	
 	@Value("${app.download.path}")
     private String appName;
@@ -66,7 +67,7 @@ public class TestController {
 	}
 	
 	@GetMapping("/getlangPDF")
-	public String getlangPDF() {
+	public String getlangPDF() throws IOException, PrinterException {
 		String Response="";
 		Optional<FeatureFlag> fFlag=featureFlagrepo.findById("generatePDF");
 		if(fFlag.isPresent() && fFlag.get().isEnable()) {
