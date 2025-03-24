@@ -7,19 +7,20 @@
         </Console>
 
         <!-- File Appender -->
-        <File name="FileAppender" fileName="logs/app.log">
+        <File name="FileAppender" fileName="E:/data/dev/app.log">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Pattern>
             </PatternLayout>
         </File>
 
         <!-- Rolling File Appender -->
-        <RollingFile name="RollingFile" fileName="logs/app.log" filePattern="logs/app-%d{yyyy-MM-dd}.log.gz">
+        <RollingFile name="RollingFile" fileName="E:/data/dev/app.log" filePattern="E:/data/dev/app-%d{yyyy-MM-dd}.log.gz">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy />
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <DefaultRolloverStrategy max="1"/>
             </Policies>
         </RollingFile>
     </Appenders>

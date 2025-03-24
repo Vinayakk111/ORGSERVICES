@@ -58,12 +58,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -91,21 +85,20 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.17.1</version>
+			<artifactId>log4j-core</artifactId>			
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.17.1</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.36</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -137,13 +130,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- SLF4J API -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
 	</dependencies>
 
 	<profiles>
@@ -155,7 +141,7 @@
 			</activation>
 			<properties>
 				<activatedProperties>dev</activatedProperties>
-				<log4j.config>log4j-dev.xml</log4j.config>
+				<!-- <log4j.config>log4j-dev.xml</log4j.config> -->
 			</properties>
 		</profile>
 
@@ -164,7 +150,7 @@
 			<id>test</id>
 			<properties>
 				<activatedProperties>test</activatedProperties>
-				<log4j.config>log4j-test.xml</log4j.config>
+				<!-- <log4j.config>log4j-test.xml</log4j.config> -->
 			</properties>
 		</profile>
 
@@ -173,7 +159,7 @@
 			<id>uat</id>
 			<properties>
 				<activatedProperties>uat</activatedProperties>
-				<log4j.config>log4j-uat.xml</log4j.config>
+				<!-- <log4j.config>log4j-uat.xml</log4j.config> -->
 			</properties>
 		</profile>
 
@@ -182,7 +168,7 @@
 			<id>preprod</id>
 			<properties>
 				<activatedProperties>preprod</activatedProperties>
-				<log4j.config>log4j-preprod.xml</log4j.config>
+				<!-- <log4j.config>log4j-preprod.xml</log4j.config> -->
 			</properties>
 		</profile>
 
@@ -191,7 +177,7 @@
 			<id>prod</id>
 			<properties>
 				<activatedProperties>prod</activatedProperties>
-				<log4j.config>log4j-prod.xml</log4j.config>
+				<!-- <log4j.config>log4j-prod.xml</log4j.config> -->
 			</properties>
 		</profile>
 	</profiles>

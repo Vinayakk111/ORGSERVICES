@@ -13,7 +13,7 @@
 	<name>apilayer</name>
 	<description>demo application for creating api end point</description>
 	<dependencies>
-		 <dependency>
+		<dependency>
 			<groupId>com.app.vpk.DataLayer</groupId>
 			<artifactId>DataLayer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -23,11 +23,12 @@
 			<artifactId>ServiceLayer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>com.app.vpk.UILayer</groupId>
-			<artifactId>UILayer</artifactId>
+
+		<dependency>
+			<groupId>com.app.vpk.DocLayer</groupId>
+			<artifactId>DocLayer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency> -->
+		</dependency>
 	</dependencies>
 
 </project>

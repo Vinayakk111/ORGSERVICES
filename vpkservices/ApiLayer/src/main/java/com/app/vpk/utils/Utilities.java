@@ -1,8 +1,14 @@
 package com.app.vpk.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class Utilities {
 	
@@ -36,6 +42,23 @@ public class Utilities {
 			throw new RuntimeException("Decompression failed", e);
 		}
 	}
+	
+	 public File zipPdf(File pdfFile,String name) throws IOException {
+	        File zipFile = new File(name);
+	        try (FileOutputStream fos = new FileOutputStream(zipFile);
+	             ZipOutputStream zipOut = new ZipOutputStream(fos);
+	             FileInputStream fis = new FileInputStream(pdfFile)) {
+	            
+	            ZipEntry zipEntry = new ZipEntry(pdfFile.getName());
+	            zipOut.putNextEntry(zipEntry);
+	            byte[] bytes = new byte[1024];
+	            int length;
+	            while ((length = fis.read(bytes)) >= 0) {
+	                zipOut.write(bytes, 0, length);
+	            }
+	        }
+	        return zipFile;
+	    }
 	
 	public static void main(String[] args) {
 		String originalString = "Hello, Pako in Java!";
