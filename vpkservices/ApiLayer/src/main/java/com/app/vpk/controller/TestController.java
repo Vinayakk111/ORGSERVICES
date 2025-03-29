@@ -3,7 +3,6 @@ package com.app.vpk.controller;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -24,6 +23,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.vpk.docservice.PDFBoxTableExample;
@@ -32,6 +32,7 @@ import com.app.vpk.entity.FeatureFlag;
 import com.app.vpk.repository.CountryLanguageRepository;
 import com.app.vpk.repository.FeatureFlagRepository;
 import com.app.vpk.service.UserService;
+import com.app.vpk.utils.ResourceNotFoundException;
 
 @RestController
 public class TestController {
@@ -106,6 +107,14 @@ public class TestController {
 	            }
 	        }
 	        return zipFile;
+	    }
+	 
+	   @GetMapping("/find")
+	    public String findResource(@RequestParam String id) {
+	        if ("123".equals(id)) {
+	            return "Resource found!";
+	        }
+	     throw new ResourceNotFoundException("Resource with ID " + id + " not found");
 	    }
 	
 }
