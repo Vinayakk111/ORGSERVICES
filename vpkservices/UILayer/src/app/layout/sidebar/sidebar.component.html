@@ -1,0 +1,11 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <button style="padding-left: 18px;" class="toggle-btn" (click)="isCollapsed = !isCollapsed">☰</button><br>
+  
+    
+  <div *ngIf="isCollapsed" style="padding-left: 15px;"><a routerLink="/home" style="color: white;"><i class="bi bi-house-heart-fill" style="font-size: 2rem;"></i></a></div>
+  <div *ngIf="isCollapsed" style="padding-left: 15px;"><a routerLink="/about" style="color: white;"><i class="bi bi-people-fill" style="font-size: 2rem;"></i></a></div>
+  <ul *ngIf="!isCollapsed">
+    <li><a routerLink="/home" style="color: white;">{{!isCollapsed ? 'Home' : ''}}</a></li>
+    <li><a routerLink="/about" style="color: white;">{{!isCollapsed ? 'About' : ''}}</a></li>
+  </ul>
+</div>
