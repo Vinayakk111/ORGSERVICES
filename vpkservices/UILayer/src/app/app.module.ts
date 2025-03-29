@@ -10,6 +10,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { AboutComponentComponent } from './layout/about-component/about-component.component';
 import { HomeComponent } from './layout/home/home.component';
 import { SliderComponent } from './layout/slider/slider.component';
+import { ToastsComponent } from './layout/toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SliderComponent } from './layout/slider/slider.component';
     FooterComponent,
     AboutComponentComponent,
     HomeComponent,
-    SliderComponent
+    SliderComponent,
+    ToastsComponent
   ],
   imports: [
     BrowserModule,
