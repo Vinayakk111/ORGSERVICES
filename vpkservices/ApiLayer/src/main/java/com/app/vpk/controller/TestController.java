@@ -22,6 +22,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,7 @@ import com.app.vpk.service.UserService;
 import com.app.vpk.utils.ResourceNotFoundException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200") // Allow requests only from Angular
 public class TestController {
 	private static final Logger logger = LogManager.getLogger(TestController.class);
 	

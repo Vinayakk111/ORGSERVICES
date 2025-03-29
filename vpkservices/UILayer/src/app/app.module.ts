@@ -12,6 +12,7 @@ import { HomeComponent } from './layout/home/home.component';
 import { SliderComponent } from './layout/slider/slider.component';
 import { ToastsComponent } from './layout/toasts/toasts.component';
 import { LoaderComponent } from './layout/loader/loader.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LoaderComponent } from './layout/loader/loader.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     NgbModule
   ],
   providers: [],
