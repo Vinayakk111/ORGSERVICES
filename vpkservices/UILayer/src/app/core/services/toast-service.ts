@@ -6,6 +6,7 @@ export class ToastService {
 
   show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
     this.toasts.push({ textOrTpl, ...options });
+    setTimeout(() => this.remove(this.toasts[0]), options.delay || 3000);
   }
 
   remove(toast) {

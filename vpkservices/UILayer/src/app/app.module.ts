@@ -11,6 +11,7 @@ import { AboutComponentComponent } from './layout/about-component/about-componen
 import { HomeComponent } from './layout/home/home.component';
 import { SliderComponent } from './layout/slider/slider.component';
 import { ToastsComponent } from './layout/toasts/toasts.component';
+import { LoaderComponent } from './layout/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ToastsComponent } from './layout/toasts/toasts.component';
     AboutComponentComponent,
     HomeComponent,
     SliderComponent,
-    ToastsComponent
+    ToastsComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
