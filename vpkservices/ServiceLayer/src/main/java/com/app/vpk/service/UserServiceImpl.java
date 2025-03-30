@@ -1,5 +1,7 @@
 package com.app.vpk.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,12 @@ public class UserServiceImpl implements UserService {
 		newuser.setName(user.getName());
 		User user1 = userRepo.save(newuser);
 		return user1;
+	}
+	
+	@Override
+	public User findById(Long id) {
+		Optional<User> user1 = userRepo.findById(id);
+		return user1.isPresent() ?user1.get():new User(); 
 	}
 
 }
