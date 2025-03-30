@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import javax.persistence.EntityManager;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,8 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,7 +40,13 @@ import com.app.vpk.service.UserService;
 import com.app.vpk.utils.ApiResponse;
 import com.app.vpk.utils.ResourceNotFoundException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Test API", description = "Test API with Swagger")
 @CrossOrigin(origins = "http://localhost:4200") // Allow requests only from Angular
 public class TestController {
 	private static final Logger logger = LogManager.getLogger(TestController.class);
@@ -64,6 +69,19 @@ public class TestController {
 	@Autowired
 	FeatureFlagRepository featureFlagrepo; 
 	
+	@Operation(
+			summary = "Getting Countries Data",
+			deprecated = false,
+			method = "getcnlang",
+					 requestBody = @RequestBody(
+					            description = "nothong to pass to get counttry data",
+					            required = true,
+					            content = @Content(
+					                schema = @Schema(implementation = CountryLanguage.class)
+					            )
+					        ), 
+			description = "Returns a Countries Data"
+			)
 	@GetMapping("/getcnlang1")
 	public List<CountryLanguage> getcnlang() {
 		return countryLanguageRepository.findAll();
