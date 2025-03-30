@@ -13,6 +13,8 @@ import { SliderComponent } from './layout/slider/slider.component';
 import { ToastsComponent } from './layout/toasts/toasts.component';
 import { LoaderComponent } from './layout/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SignupComponent } from './layout/signup/signup.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,12 +26,14 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     SliderComponent,
     ToastsComponent,
-    LoaderComponent
+    LoaderComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   providers: [],
