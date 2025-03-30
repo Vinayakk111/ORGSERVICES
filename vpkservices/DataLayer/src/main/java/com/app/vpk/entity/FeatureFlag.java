@@ -14,7 +14,7 @@ public class FeatureFlag {
 	private String featUid; // Unique feature name (Primary Key)
 
 	@Column(name = "ENABLE", nullable = false)
-	private boolean enable; // true = enabled, false = disabled
+	private Boolean enable; // true = enabled, false = disabled
 
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description; // Description of the feature
@@ -36,11 +36,11 @@ public class FeatureFlag {
 		this.featUid = featUid;
 	}
 
-	public boolean isEnable() {
+	public Boolean isEnable() {
 		return enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
 
