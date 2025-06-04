@@ -2,12 +2,14 @@ package com.app.vpk;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
+@EnableCaching
 @OpenAPIDefinition(info = @Info(title = "vpkservices", version = "1.0", description = "API Documentation"))
 @EnableScheduling
 public class ApiLayerApplication {
@@ -18,5 +20,6 @@ public class ApiLayerApplication {
 		System.out.println("application running fine...");
 		
 	}
+
 
 }

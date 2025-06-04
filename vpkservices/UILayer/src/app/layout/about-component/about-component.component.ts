@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { DataShareService } from 'src/app/core/services/data-share.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { ToastService } from 'src/app/core/services/toast-service';
@@ -68,7 +68,7 @@ export class AboutComponentComponent implements OnInit {
   closeResult = '';
   
 
-  constructor(private modalService: NgbModal, public toastService: ToastService,private loaderService: LoaderService,private dataService: DataShareService) { }
+  constructor( public toastService: ToastService,private loaderService: LoaderService,private dataService: DataShareService) { }
   showStandard() {
     this.toastService.show('I am a standard toast');
   }
@@ -81,21 +81,11 @@ export class AboutComponentComponent implements OnInit {
     this.toastService.show(dangerTpl, { classname: 'bg-danger text-light', delay: 5000 });
   }
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    
   }
 
   private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+   return '';
   }
 
   countries = COUNTRIES;

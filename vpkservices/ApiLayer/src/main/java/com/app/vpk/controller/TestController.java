@@ -5,11 +5,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import javax.persistence.EntityManager;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,7 +28,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +37,7 @@ import com.app.vpk.entity.FeatureFlag;
 import com.app.vpk.entity.User;
 import com.app.vpk.repository.CountryLanguageRepository;
 import com.app.vpk.repository.FeatureFlagRepository;
+import com.app.vpk.service.ConfigService;
 import com.app.vpk.service.UserService;
 import com.app.vpk.utils.ApiResponse;
 import com.app.vpk.utils.ResourceNotFoundException;
@@ -43,6 +45,7 @@ import com.app.vpk.utils.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -50,105 +53,110 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin(origins = "http://localhost:4200") // Allow requests only from Angular
 public class TestController {
 	private static final Logger logger = LogManager.getLogger(TestController.class);
-	
+
 	@Value("${app.download.path}")
-    private String appName;
+	private String appName;
+
+	@Autowired
+	private ConfigService configService;
 
 	@Autowired
 	EntityManager manager;
-	
+
 	@Autowired
 	PDFBoxTableExample pDFBoxTableExample;
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	CountryLanguageRepository countryLanguageRepository;
-	
+
 	@Autowired
-	FeatureFlagRepository featureFlagrepo; 
-	
-	@Operation(
-			summary = "Getting Countries Data",
-			deprecated = false,
-			method = "getcnlang",
-					 requestBody = @RequestBody(
-					            description = "nothong to pass to get counttry data",
-					            required = true,
-					            content = @Content(
-					                schema = @Schema(implementation = CountryLanguage.class)
-					            )
-					        ), 
-			description = "Returns a Countries Data"
-			)
+	FeatureFlagRepository featureFlagrepo;
+
+	@Operation(summary = "Getting Countries Data", deprecated = false, method = "getcnlang", requestBody = @RequestBody(description = "nothong to pass to get counttry data", required = true, content = @Content(schema = @Schema(implementation = CountryLanguage.class))), description = "Returns a Countries Data")
 	@GetMapping("/getcnlang1")
 	public List<CountryLanguage> getcnlang() {
 		return countryLanguageRepository.findAll();
 	}
-	
+
 	@GetMapping("/getpropname1")
 	public String getpropname() {
 		logger.info(appName);
 		return appName;
 	}
-	
+
 	@GetMapping("/getlangPDF")
 	public String getlangPDF() throws IOException, PrinterException {
-		String Response="";
-		Optional<FeatureFlag> fFlag=featureFlagrepo.findById("generatePDF");
-		if(fFlag.isPresent() && fFlag.get().isEnable()) {
+		String Response = "";
+		Optional<FeatureFlag> fFlag = featureFlagrepo.findById("generatePDF");
+		if (fFlag.isPresent() && fFlag.get().isEnable()) {
 			pDFBoxTableExample.getpdf("mr");
-			Response="success";
-		}else {
-			Response="failed due to DDisabled Features";
+			Response = "success";
+		} else {
+			Response = "failed due to DDisabled Features";
 		}
-		logger.info("Resp"+Response);
+		logger.info("Resp" + Response);
 		return Response;
 	}
-	@GetMapping("/getlangPDFDownload")
-	public ResponseEntity<InputStreamResource>  getlangPDFDownload() throws IOException {
-		 File pdfFile = new File("E:/data/dev/table.pdf");
-		 File zipFile = zipPdf(pdfFile);
 
-		 InputStreamResource resource = new InputStreamResource(new FileInputStream(zipFile));
-	        return ResponseEntity.ok()
-	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + zipFile.getName())
-	                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-	                .body(resource);
+	@GetMapping("/getlangPDFDownload")
+	public ResponseEntity<InputStreamResource> getlangPDFDownload() throws IOException {
+		File pdfFile = new File("E:/data/dev/table.pdf");
+		File zipFile = zipPdf(pdfFile);
+
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(zipFile));
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + zipFile.getName())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+	}
+
+	public File zipPdf(File pdfFile) throws IOException {
+		File zipFile = new File("report.zip");
+		try (FileOutputStream fos = new FileOutputStream(zipFile);
+				ZipOutputStream zipOut = new ZipOutputStream(fos);
+				FileInputStream fis = new FileInputStream(pdfFile)) {
+
+			ZipEntry zipEntry = new ZipEntry(pdfFile.getName());
+			zipOut.putNextEntry(zipEntry);
+			byte[] bytes = new byte[1024];
+			int length;
+			while ((length = fis.read(bytes)) >= 0) {
+				zipOut.write(bytes, 0, length);
+			}
+		}
+		return zipFile;
+	}
+
+	@GetMapping("/find")
+	public String findResource(@RequestParam String id) {
+		if ("123".equals(id)) {
+			return "Resource found!";
+		}
+		throw new ResourceNotFoundException("Resource with ID " + id + " not found");
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ApiResponse<User>> getUser(@PathVariable Long id) {
+		int maxAttempts = configService.getIntConfig("MAX_LOGIN_ATTEMPTS", 3);
+		boolean isNewFeatureEnabled = configService.getBooleanConfig("ENABLE_NEW_FEATURE", false);
+		String supportEmail = configService.getStringConfig("SUPPORT_EMAIL", "default@x.com");
+
+		Map<String, Runnable> commands = new HashMap<>();
+
+		commands.put("start", () -> System.out.println("Starting..."));
+		commands.put("stop", () -> System.out.println("Stopping..."));
+		commands.put("restart", () -> {
+			System.out.println("Stopping...");
+			System.out.println("Starting...");
+		});
+
+		User user = userService.findById(id);
+		if (user == null) {
+			return ApiResponse.error("User not found", HttpStatus.NOT_FOUND, Optional.empty());
+		}
+		return ApiResponse.success(user, "User fetched successfully");
 	}
 	
-	 public File zipPdf(File pdfFile) throws IOException {
-	        File zipFile = new File("report.zip");
-	        try (FileOutputStream fos = new FileOutputStream(zipFile);
-	             ZipOutputStream zipOut = new ZipOutputStream(fos);
-	             FileInputStream fis = new FileInputStream(pdfFile)) {
-	            
-	            ZipEntry zipEntry = new ZipEntry(pdfFile.getName());
-	            zipOut.putNextEntry(zipEntry);
-	            byte[] bytes = new byte[1024];
-	            int length;
-	            while ((length = fis.read(bytes)) >= 0) {
-	                zipOut.write(bytes, 0, length);
-	            }
-	        }
-	        return zipFile;
-	    }
-	 
-	   @GetMapping("/find")
-	    public String findResource(@RequestParam String id) {
-	        if ("123".equals(id)) {
-	            return "Resource found!";
-	        }
-	     throw new ResourceNotFoundException("Resource with ID " + id + " not found");
-	    }
-	   
-	    @GetMapping("/{id}")
-	    public ResponseEntity<ApiResponse<User>> getUser(@PathVariable Long id) {
-	        User user = userService.findById(id);
-	        if (user == null) {
-	            return ApiResponse.error("User not found", HttpStatus.NOT_FOUND,Optional.empty());
-	        }
-	        return ApiResponse.success(user, "User fetched successfully");
-	    }
+	
 }

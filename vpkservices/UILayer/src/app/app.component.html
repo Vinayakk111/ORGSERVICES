@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!-- <app-header></app-header>
 
 <div class="content-wrapper">
   <app-sidebar></app-sidebar>
@@ -11,3 +11,13 @@
 <app-footer></app-footer>
 <app-loader [loading]="isLoading"></app-loader>
 <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+ -->
+
+
+ <app-header></app-header>
+
+<main class="app-main">
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>
