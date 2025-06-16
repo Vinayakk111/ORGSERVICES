@@ -11,13 +11,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
 import javax.persistence.EntityManager;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -28,10 +24,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.app.vpk.docservice.PDFBoxTableExample;
+import com.app.vpk.dto.UserInfo;
 import com.app.vpk.entity.CountryLanguage;
 import com.app.vpk.entity.FeatureFlag;
 import com.app.vpk.entity.User;
@@ -41,7 +38,9 @@ import com.app.vpk.service.ConfigService;
 import com.app.vpk.service.UserService;
 import com.app.vpk.utils.ApiResponse;
 import com.app.vpk.utils.ResourceNotFoundException;
-
+import com.app.vpk.utils.Utilities;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -157,6 +156,11 @@ public class TestController {
 		}
 		return ApiResponse.success(user, "User fetched successfully");
 	}
-	
-	
+
+	@PostMapping("/jsonTest")
+	public String jsonTest(@org.springframework.web.bind.annotation.RequestBody(required = true) UserInfo userInfo) throws JsonProcessingException {
+	    Utilities.infoLogger.accept(logger, new ObjectMapper().writeValueAsString(userInfo));
+		return new ObjectMapper().writeValueAsString(userInfo);
+	}
+
 }
