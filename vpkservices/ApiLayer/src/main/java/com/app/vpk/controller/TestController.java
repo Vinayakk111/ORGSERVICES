@@ -54,7 +54,7 @@ public class TestController {
 	private static final Logger logger = LogManager.getLogger(TestController.class);
 
 	@Value("${app.download.path}")
-	private String appName;
+	private String downloadPath;
 
 	@Autowired
 	private ConfigService configService;
@@ -75,56 +75,60 @@ public class TestController {
 	FeatureFlagRepository featureFlagrepo;
 
 	@Operation(summary = "Getting Countries Data", deprecated = false, method = "getcnlang", requestBody = @RequestBody(description = "nothong to pass to get counttry data", required = true, content = @Content(schema = @Schema(implementation = CountryLanguage.class))), description = "Returns a Countries Data")
-	@GetMapping("/getcnlang1")
+	@GetMapping("/getcountrylanguage")
 	public List<CountryLanguage> getcnlang() {
 		return countryLanguageRepository.findAll();
 	}
 
-	@GetMapping("/getpropname1")
-	public String getpropname() {
-		logger.info(appName);
-		return appName;
+	
+	@GetMapping("/test")
+	public ResponseEntity<?> getpropname() {
+		logger.info(downloadPath);
+		
+		return ResponseEntity
+		.status(HttpStatus.OK)
+		.body("Success");
 	}
 
-	@GetMapping("/getlangPDF")
-	public String getlangPDF() throws IOException, PrinterException {
-		String Response = "";
-		Optional<FeatureFlag> fFlag = featureFlagrepo.findById("generatePDF");
-		if (fFlag.isPresent() && fFlag.get().isEnable()) {
-			pDFBoxTableExample.getpdf("mr");
-			Response = "success";
-		} else {
-			Response = "failed due to DDisabled Features";
-		}
-		logger.info("Resp" + Response);
-		return Response;
-	}
-
-	@GetMapping("/getlangPDFDownload")
-	public ResponseEntity<InputStreamResource> getlangPDFDownload() throws IOException {
-		File pdfFile = new File("E:/data/dev/table.pdf");
-		File zipFile = zipPdf(pdfFile);
-
-		InputStreamResource resource = new InputStreamResource(new FileInputStream(zipFile));
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + zipFile.getName())
-				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
-	}
-
-	public File zipPdf(File pdfFile) throws IOException {
-		File zipFile = new File("report.zip");
-		try (FileOutputStream fos = new FileOutputStream(zipFile);
-				ZipOutputStream zipOut = new ZipOutputStream(fos);
-				FileInputStream fis = new FileInputStream(pdfFile)) {
-
-			ZipEntry zipEntry = new ZipEntry(pdfFile.getName());
-			zipOut.putNextEntry(zipEntry);
-			byte[] bytes = new byte[1024];
-			int length;
-			while ((length = fis.read(bytes)) >= 0) {
-				zipOut.write(bytes, 0, length);
+	@GetMapping("/getsamplepdfdownload")
+	public ResponseEntity<?> getSampleMultiLanguagePDFDownload() throws IOException, PrinterException {
+		try {
+			String Response = "";
+			Optional<FeatureFlag> fFlag = featureFlagrepo.findById("generatePDF");
+			if (fFlag.isPresent() && fFlag.get().isEnable()) {
+				pDFBoxTableExample.getpdf(pDFBoxTableExample.createSamplePDF());
+				Response = "success";
+			} else {
+				Response = "failed due to Feature is Disabled";
 			}
+			logger.info("Respose {}" , Response);
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(Response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(e);
 		}
-		return zipFile;
+	}
+
+	@GetMapping("/getZIPDownload")
+	public ResponseEntity<?> getSampleMultiLanguageZipDownolad() throws IOException {
+		
+		try {
+			File pdfFile = new File(pDFBoxTableExample.createSamplePDF());
+			File zipFile = new Utilities().zipPdf(pdfFile);
+			
+			InputStreamResource resource = new InputStreamResource(new FileInputStream(zipFile));
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + zipFile.getName())
+					.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);	
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(e);
+		}
 	}
 
 	@GetMapping("/find")
@@ -157,7 +161,7 @@ public class TestController {
 		return ApiResponse.success(user, "User fetched successfully");
 	}
 
-	@PostMapping("/jsonTest")
+	@PostMapping("/jsontest")
 	public String jsonTest(@org.springframework.web.bind.annotation.RequestBody(required = true) UserInfo userInfo) throws JsonProcessingException {
 	    Utilities.infoLogger.accept(logger, new ObjectMapper().writeValueAsString(userInfo));
 		return new ObjectMapper().writeValueAsString(userInfo);

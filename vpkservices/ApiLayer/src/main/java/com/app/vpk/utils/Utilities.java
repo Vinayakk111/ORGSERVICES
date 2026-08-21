@@ -81,6 +81,23 @@ public class Utilities {
 		}
 		return zipFile;
 	}
+	
+	public File zipPdf(File pdfFile) throws IOException {
+		File zipFile = new File("report.zip");
+		try (FileOutputStream fos = new FileOutputStream(zipFile);
+				ZipOutputStream zipOut = new ZipOutputStream(fos);
+				FileInputStream fis = new FileInputStream(pdfFile)) {
+
+			ZipEntry zipEntry = new ZipEntry(pdfFile.getName());
+			zipOut.putNextEntry(zipEntry);
+			byte[] bytes = new byte[1024];
+			int length;
+			while ((length = fis.read(bytes)) >= 0) {
+				zipOut.write(bytes, 0, length);
+			}
+		}
+		return zipFile;
+	}
 
 	public static void main(String[] args) {
 		String originalString = "Hello, Pako in Java!";

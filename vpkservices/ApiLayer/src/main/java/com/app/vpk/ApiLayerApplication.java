@@ -15,11 +15,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 public class ApiLayerApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(ApiLayerApplication.class, args);
-		System.out.println("application running fine...");
-		
 	}
-
-
+	
 }
