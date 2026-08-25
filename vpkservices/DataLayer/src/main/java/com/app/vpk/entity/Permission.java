@@ -9,15 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "roles")
-
-public class Role {
+@Table(name = "permissions")
+public class Permission {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +28,8 @@ public class Role {
 	@Column(nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-	private Set<User> users = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "role_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-	private Set<Permission> permissions = new HashSet<>();
+	@ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
+	private Set<Role> roles = new HashSet<>();
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -73,20 +66,12 @@ public class Role {
 		this.enabled = enabled;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-	public Set<Permission> getPermissions() {
-		return permissions;
-	}
-
-	public void setPermissions(Set<Permission> permissions) {
-		this.permissions = permissions;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -99,25 +84,24 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", description=" + description + ", enabled=" + enabled
-				+ ", users=" + users + ", createdAt=" + createdAt + "]";
+		return "Permission [id=" + id + ", name=" + name + ", description=" + description + ", enabled=" + enabled
+				+ ", roles=" + roles + ", createdAt=" + createdAt + "]";
 	}
 
-	public Role(Long id, String name, String description, boolean enabled, Set<User> users, Set<Permission> permissions,
+	public Permission() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Permission(Long id, String name, String description, boolean enabled, Set<Role> roles,
 			LocalDateTime createdAt) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.enabled = enabled;
-		this.users = users;
-		this.permissions = permissions;
+		this.roles = roles;
 		this.createdAt = createdAt;
-	}
-
-	public Role() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }
