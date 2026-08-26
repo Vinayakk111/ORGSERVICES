@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.vpk.dto.CustomUserPrincipal;
@@ -51,22 +52,28 @@ public class RefreshTokenService {
 	@Transactional
 	public String createRefreshToken(Long userId) {
 
-		User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		try {
+			User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-		validateUser(user);
+			validateUser(user);
 
-		String rawToken = refreshTokenGenerator.generate();
+			String rawToken = refreshTokenGenerator.generate();
 
-		String tokenHash = tokenHashService.hash(rawToken);
+			String tokenHash = tokenHashService.hash(rawToken);
 
-		LocalDateTime now = LocalDateTime.now();
+			LocalDateTime now = LocalDateTime.now();
 
-		RefreshToken refreshToken = new RefreshToken(tokenHash, user, now,now.plusSeconds(refreshTokenExpiration / 1000),
-				false);
+			RefreshToken refreshToken = new RefreshToken(tokenHash, user, now,now.plusSeconds(refreshTokenExpiration / 1000),
+					false);
 
-		refreshTokenRepository.save(refreshToken);
+			refreshTokenRepository.save(refreshToken);
+			
+			return rawToken;	
+		}catch(Exception e ) {
+			e.printStackTrace();
+		}
 		
-		return rawToken;
+		return "";
 	}
 
 	private void validateUser(User user) {
@@ -82,18 +89,24 @@ public class RefreshTokenService {
 			throw new AccountStatusException("User account is locked") {
 			};
 		}
+		
+		if (!user.isAccountNonExpired()) {
 
-		if (user.getLockedAt() != null && user.getLockedAt().isBefore(LocalDateTime.now())) {
-
-			throw new AccountStatusException("User account has expired") {
+			throw new AccountStatusException("User account is Expired") {
 			};
 		}
 
-		if (user.getLockedAt() != null && user.getLockedAt().isBefore(LocalDateTime.now())) {
-
-			throw new AccountStatusException("User credentials have expired") {
-			};
-		}
+//		if (user.getLockedAt() != null && user.getLockedAt().isBefore(LocalDateTime.now())) {
+//
+//			throw new AccountStatusException("User account has expired") {
+//			};
+//		}
+//
+//		if (user.getLockedAt() != null && user.getLockedAt().isBefore(LocalDateTime.now())) {
+//
+//			throw new AccountStatusException("User credentials have expired") {
+//			};
+//		}
 	}
 
 	@Transactional
