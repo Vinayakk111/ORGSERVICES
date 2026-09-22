@@ -1,5 +1,7 @@
 package com.app.vpk.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,8 @@ import com.app.vpk.services.FloatRatesSyncService;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-
+	
+	private static final Logger logger = LogManager.getLogger(UserController.class);
 	
 	@Autowired
 	FloatRatesSyncService floatRatesSyncService;
@@ -50,6 +53,8 @@ public class UserController {
 	
 	@GetMapping("/currency/{from}/{to}")
 	public ResponseEntity<?> getCurrencyExchangedData(@PathVariable("from") String from,@PathVariable("to") String to) {
+		logger.info(from);
+		logger.info(to);
 		return ResponseEntity.status(HttpStatus.OK).body(floatRatesSyncService.getCurrency(from, to));
 	}	
 
