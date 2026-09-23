@@ -1,9 +1,6 @@
 package com.app.vpk.entity;
 
 import javax.persistence.*;
-
-import lombok.Builder;
-
 import java.time.LocalDateTime;
 
 @Entity

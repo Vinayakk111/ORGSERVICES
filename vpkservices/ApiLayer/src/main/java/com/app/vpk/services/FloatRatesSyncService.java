@@ -4,14 +4,10 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import com.app.vpk.dto.FloatRateDto;
 import com.app.vpk.dto.FloatRatesResponse;
 import com.app.vpk.entity.Currency;
@@ -35,8 +31,8 @@ public class FloatRatesSyncService {
 	@Autowired
 	private ExchangeRateRepository rateRepository;
 
-	public List<ExchangeRate> getCurrency(String from,String to) {
-		return rateRepository.findLatestRate(from,to,PageRequest.of(0, 1));
+	public List<ExchangeRate> getCurrency(String from, String to) {
+		return rateRepository.findLatestRate(from, to, PageRequest.of(0, 1));
 	}
 
 	@Transactional

@@ -1,17 +1,13 @@
 package com.app.vpk.security.repository.impl;
 
 import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.app.vpk.dto.CustomUserPrincipal;
 import com.app.vpk.entity.User;
 

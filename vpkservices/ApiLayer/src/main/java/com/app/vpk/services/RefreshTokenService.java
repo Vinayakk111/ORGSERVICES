@@ -1,14 +1,11 @@
 package com.app.vpk.services;
 
 import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.app.vpk.dto.CustomUserPrincipal;
 import com.app.vpk.dto.RefreshResponse;
 import com.app.vpk.entity.RefreshToken;

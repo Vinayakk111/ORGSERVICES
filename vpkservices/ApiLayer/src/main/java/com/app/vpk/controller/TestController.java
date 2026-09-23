@@ -4,9 +4,7 @@ import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -22,22 +20,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.vpk.docservice.PDFBoxTableExample;
 import com.app.vpk.entity.CountryLanguage;
 import com.app.vpk.entity.FeatureFlag;
-//import com.app.vpk.entity.User;
 import com.app.vpk.repository.CountryLanguageRepository;
 import com.app.vpk.repository.FeatureFlagRepository;
 import com.app.vpk.service.ConfigService;
-//import com.app.vpk.service.UserService;
-import com.app.vpk.utils.ApiResponse;
 import com.app.vpk.utils.ResourceNotFoundException;
 import com.app.vpk.utils.Utilities;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

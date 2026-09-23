@@ -1,12 +1,11 @@
 package com.app.vpk.docservice;
 
-import org.apache.pdfbox.pdmodel.*;
-import org.apache.pdfbox.pdmodel.font.*;
-import java.io.*;
-
-import org.apache.pdfbox.pdmodel.*;
-import org.apache.pdfbox.pdmodel.font.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
 public class PdfBoxMultiFontExample {
     public static void main(String[] args) {
