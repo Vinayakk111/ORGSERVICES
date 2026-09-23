@@ -12,12 +12,12 @@ This project Included with Below Items
 
 1.Modular Structure  
 2.PDF Creation
-
 3.Logger Implementation.  
 4.Scheduler (With Reload).
-  
 5.Swgger Api.  
 6.FF4J.
+7.Added Trace Id in Logger
+8.Added Rule Engine for Excel Upload
 
 
 ## Contributing
